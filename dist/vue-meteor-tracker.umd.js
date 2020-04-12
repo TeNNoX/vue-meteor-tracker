@@ -1752,7 +1752,6 @@ var index = {
     }
 
     function proxyData() {
-      var initData = this.$_meteorInitData = {};
       var meteor = this.$options.meteor;
 
       if (meteor) {
@@ -1760,12 +1759,6 @@ var index = {
         for (var key in meteor) {
           if (key.charAt(0) !== '$') {
             proxyKey.call(this, key);
-
-            var func = meteor[key];
-
-            if (meteor.$lazy && typeof func === 'function') {
-              initData[key] = getResult(func.call(this));
-            }
           }
         }
       }
@@ -1820,7 +1813,7 @@ var index = {
       data: function data() {
         return {
           $meteor: {
-            data: this.$_meteorInitData,
+            data: {},
             subs: {}
           }
         };
